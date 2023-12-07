@@ -14,28 +14,35 @@ function FormUser() {
 
   const handleSearch = async (e: any) => {
     setLoading(true);
+    await createUser({ name });
+    setLoading(false);
+    setName('');
+    e.preventDefault();
   };
   return (
-    <form>
-      <input
-        onChange={ (e: any) => {
-          handleChange(e);
-          setName(e.target.value);
-        } }
-        type="text"
-        name="name"
-        id="name"
-        value={ name }
-        data-testid="login-name-input"
-      />
-      <button
-        onClick={ () => createUser({ name }) }
-        disabled={ showBtn }
-        data-testid="login-submit-button"
-      >
-        Entrar
-      </button>
-    </form>
+    <>
+      <form>
+        <input
+          onChange={ (e: any) => {
+            handleChange(e);
+            setName(e.target.value);
+          } }
+          type="text"
+          name="name"
+          id="name"
+          value={ name }
+          data-testid="login-name-input"
+        />
+        <button
+          onClick={ handleSearch }
+          disabled={ showBtn }
+          data-testid="login-submit-button"
+        >
+          Entrar
+        </button>
+      </form>
+      {loading && <p>Carregando...</p>}
+    </>
   );
 }
 
